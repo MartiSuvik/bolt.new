@@ -1,0 +1,69 @@
+card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-areas: 'card';
+  place-items: center;
+  aspect-ratio: 4/5;
+  border: 1px solid var(--surface-2);
+  isolation: isolate;
+  user-select: none;
+  background-color: #2e2e2e; /* Dark gray for inactive background */
+  color: #818181; /* Light gray for inactive text color */
+  transition: border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out), background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
+}
+
+.card:hover {
+  box-shadow: 0 0 10px var(--fg); /* Glow effect */
+  background-color: var(--surface-1); /* Change to a visible color */
+  color: var(--fg); /* Change text to a visible color */
+}
+
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  pointer-events: none;
+  transition: opacity 800ms var(--ease-out);
+}
+
+.card::before {
+  background: radial-gradient(
+    circle at bottom left,
+    transparent 55%,
+    var(--surface-1)
+  );
+  opacity: 1;
+}
+
+.card::after {
+  background: radial-gradient(circle, var(--bg), transparent 65%);
+  opacity: 0;
+}
+
+.card:hover::before {
+  opacity: 0;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card > * {
+  grid-area: card;
+  z-index: 1;
+}
+
+/* New styles for pixel-canvas to manage grayscale effect */
+.pixel-canvas {
+  filter: grayscale(1); /* Initially grayscale */
+  transition: filter 300ms var(--ease-out);
+}
+
+.card:hover .pixel-canvas {
+  filter: grayscale(0); /* Full color on hover */
+}
